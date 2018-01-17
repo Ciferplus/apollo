@@ -36,6 +36,7 @@ cc_test(
         "light_test.cc",
         "utils_structs_test.cc",
     ],
+    linkopts = [ "-L/usr/lib/x86_64-linux-gnu -lopencv_ocl -lopencv_imgproc" ],
     deps = [
         "//modules/common:log",
         "//modules/map/proto:map_proto",

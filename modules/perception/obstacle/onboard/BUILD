@@ -206,6 +206,7 @@ cc_test(
         "//modules/map:map_data",
         "//modules/perception:perception_data",
     ],
+    linkopts = [ "-L/usr/lib/x86_64-linux-gnu/ -lGL -lGLU" ],
     deps = [
         ":perception_obstacle_hdmapinput",
         ":perception_obstacle_lidar_process",

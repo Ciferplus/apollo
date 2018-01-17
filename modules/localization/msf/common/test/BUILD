@@ -20,6 +20,7 @@ cc_test(
     data = [
         ":localization_msf_common_test_data",
     ],
+    linkopts = [ "-lz" ],
     deps = [
         "//modules/common:log",
         "//modules/localization/msf/common/io:localization_msf_common_io",
