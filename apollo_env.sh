@@ -734,5 +734,3 @@ function main() {
       ;;
   esac
 }
-
-main $@

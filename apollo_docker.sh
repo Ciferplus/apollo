@@ -136,6 +136,16 @@ case $1 in
     OTA_RELEASE=1
     gen_docker
     ;;
+  coverity_scan)
+    docker exec -u $USER \
+    -e COVERITY_SCAN_PROJECT_NAME=$DOCKER_COVERITY_SCAN_PROJECT_NAME \
+    -e COVERITY_SCAN_NOTIFICATION_EMAIL=$DOCKER_COVERITY_SCAN_NOTIFICATION_EMAIL \
+    -e COVERITY_SCAN_BRANCH_PATTERN=$DOCKER_COVERITY_SCAN_BRANCH_PATTERN \
+    -e COVERITY_SCAN_BUILD_COMMAND=$DOCKER_COVERITY_SCAN_BUILD_COMMAND \
+    -e COVERITY_SCAN_TOKEN=$DOCKER_COVERITY_SCAN_TOKEN \
+    apollo_dev \
+    bash -c "./coverity_scan.sh"
+    ;;
   *)
     docker exec -u $USER apollo_dev bash -c "./apollo.sh $@"
     ;;
