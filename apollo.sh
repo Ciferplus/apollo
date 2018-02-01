@@ -168,6 +168,30 @@ function cibuild() {
   fi
 }
 
+function coverity_build() {
+  START_TIME=$(get_now)
+
+  echo "Start building, please wait ..."
+  generate_build_targets
+  echo "Building on $MACHINE_ARCH..."
+  BUILD_TARGETS="
+  //modules/control
+  //modules/dreamview
+  //modules/localization
+  //modules/perception
+  //modules/planning
+  //modules/prediction
+  //modules/routing
+  "
+  COVERITY_UNSUPPORTED=1 cov-build --dir cov-int bazel build $DEFINES $@ $BUILD_TARGETS
+  if [ $? -eq 0 ]; then
+    success 'Build passed!'
+  else
+    fail 'Build failed!'
+  fi
+}
+
+
 function apollo_build_dbg() {
   build "dbg" $@
 }
