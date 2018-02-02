@@ -174,6 +174,11 @@ function coverity_build() {
   echo "Start building, please wait ..."
   generate_build_targets
   echo "Building on $MACHINE_ARCH..."
+
+  TOOL_BASE=/tmp/coverity-scan-analysis
+  TOOL_DIR=`find $TOOL_BASE -type d -name 'cov-analysis*'`
+  export PATH=$TOOL_DIR/bin:$PATH
+
   BUILD_TARGETS="
   //modules/control
   //modules/dreamview
@@ -656,6 +661,10 @@ function main() {
     cibuild)
       DEFINES="${DEFINES} --cxxopt=-DCPU_ONLY"
       cibuild $@
+      ;;
+    coverity_build)
+      DEFINES="${DEFINES} --cxxopt=-DCPU_ONLY"
+      coverity_build $@
       ;;
     build_opt)
       DEFINES="${DEFINES} --cxxopt=-DCPU_ONLY"

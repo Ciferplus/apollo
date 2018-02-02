@@ -120,6 +120,8 @@ if [ $# == 0 ];then
     exit 1
 fi
 
+echo  "start downloading coverity tools ..."
+./cs.sh download
 start_build_docker
 
 case $1 in
@@ -144,7 +146,8 @@ case $1 in
     -e COVERITY_SCAN_BUILD_COMMAND=$DOCKER_COVERITY_SCAN_BUILD_COMMAND \
     -e COVERITY_SCAN_TOKEN=$DOCKER_COVERITY_SCAN_TOKEN \
     apollo_dev \
-    bash -c "./coverity_scan.sh $@"
+    bash -c "./apollo.sh coverity_build"
+    ./cs.sh upload
     ;;
   *)
     docker exec -u $USER apollo_dev bash -c "./apollo.sh $@"

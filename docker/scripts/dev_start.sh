@@ -168,6 +168,7 @@ function main(){
         -v $HOME/.cache:${DOCKER_HOME}/.cache \
         -v /etc/localtime:/etc/localtime:ro \
         -v /usr/src:/usr/src \
+        -v /tmp/coverity-scan-analysis:/tmp/coverity-scan-analysis \
         -v /lib/modules:/lib/modules \
         --net host \
         -w /apollo \
