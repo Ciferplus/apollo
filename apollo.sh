@@ -94,7 +94,9 @@ function check_esd_files() {
 
 function generate_build_targets() {
   if [ -z $NOT_BUILD_PERCEPTION ] ; then
-    BUILD_TARGETS=`bazel query //...`
+    #BUILD_TARGETS=`bazel query //...`
+    BUILD_TARGETS=`bazel query //... except //modules/perception/obstacle/onboard/... except //modules/perception/traffic_light/... except //modules/perception/cuda_util/... except //modules/perception/lib/config_manager/... except //modules/perception/obstacle/camera/detector/common/... except //modules/perception/obstacle/lidar/segmentation/cnnseg/... except //modules/perception/obstacle/camera/common/... except //modules/perception/common/sequence_type_fuser/... except //modules/perception/tool/offline_visualizer_tool/...  except //modules/perception/... except //modules/calibration/lidar_ex_checker/...`
+     BUILD_TARGETS=$(echo $BUILD_TARGETS |tr ' ' '\n' | grep -v "test$")
   else
     info 'Skip building perception module!'
     BUILD_TARGETS=`bazel query //... except //modules/perception/... except //modules/calibration/lidar_ex_checker/...`

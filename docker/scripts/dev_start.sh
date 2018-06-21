@@ -125,7 +125,8 @@ fi
 
 # Included default maps.
 for map_name in ${DEFAULT_MAPS[@]}; do
-    source ${APOLLO_ROOT_DIR}/docker/scripts/restart_map_volume.sh ${map_name} "${VOLUME_VERSION}"
+#    source ${APOLLO_ROOT_DIR}/docker/scripts/restart_map_volume.sh ${map_name} "${VOLUME_VERSION}"
+	echo "ignored";
 done
 
 IMG=${DOCKER_REPO}:$VERSION
@@ -194,24 +195,25 @@ function main(){
     docker stop ${LOCALIZATION_VOLUME} > /dev/null 2>&1
 
     LOCALIZATION_VOLUME_IMAGE=${DOCKER_REPO}:localization_volume-${ARCH}-latest
-    docker pull ${LOCALIZATION_VOLUME_IMAGE}
-    docker run -it -d --rm --name ${LOCALIZATION_VOLUME} ${LOCALIZATION_VOLUME_IMAGE}
+    #docker pull ${LOCALIZATION_VOLUME_IMAGE}
+    #docker run -it -d --rm --name ${LOCALIZATION_VOLUME} ${LOCALIZATION_VOLUME_IMAGE}
 
     YOLO3D_VOLUME=apollo_yolo3d_volume
-    docker stop ${YOLO3D_VOLUME} > /dev/null 2>&1
+    #docker stop ${YOLO3D_VOLUME} > /dev/null 2>&1
 
     YOLO3D_VOLUME_IMAGE=${DOCKER_REPO}:yolo3d_volume-${ARCH}-latest
-    docker pull ${YOLO3D_VOLUME_IMAGE}
-    docker run -it -d --rm --name ${YOLO3D_VOLUME} ${YOLO3D_VOLUME_IMAGE}
+    #docker pull ${YOLO3D_VOLUME_IMAGE}
+    #docker run -it -d --rm --name ${YOLO3D_VOLUME} ${YOLO3D_VOLUME_IMAGE}
+
+    #    ${MAP_VOLUME_CONF} \
+    #    --volumes-from ${LOCALIZATION_VOLUME} \
+    #    --volumes-from ${YOLO3D_VOLUME} \
 
     info "Starting docker container \"apollo_dev\" ..."
     docker run -it \
         -d \
         --privileged \
         --name apollo_dev \
-        ${MAP_VOLUME_CONF} \
-        --volumes-from ${LOCALIZATION_VOLUME} \
-        --volumes-from ${YOLO3D_VOLUME} \
         -e DISPLAY=$display \
         -e DOCKER_USER=$USER \
         -e USER=$USER \

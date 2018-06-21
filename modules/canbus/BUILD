@@ -27,6 +27,7 @@ cc_test(
         ":canbus_lib",
         "@gtest//:main",
     ],
+    linkopts = [ "-lconsole_bridge" ]
 )
 
 cc_binary(
@@ -42,6 +43,7 @@ cc_binary(
         "//modules/drivers/canbus/common:canbus_common",
         "@ros//:ros_common",
     ],
+    linkopts = [ "-lconsole_bridge" ]
 )
 
 filegroup(

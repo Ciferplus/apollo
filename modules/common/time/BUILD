@@ -30,6 +30,7 @@ cc_test(
         ":time",
         "@gtest//:main",
     ],
+    linkopts = [ "-lconsole_bridge" ]
 )
 
 cc_test(
@@ -42,6 +43,7 @@ cc_test(
         ":time",
         "@gtest//:main",
     ],
+    linkopts = [ "-lconsole_bridge" ]
 )
 
 cpplint()

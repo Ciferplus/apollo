@@ -44,6 +44,7 @@ cc_binary(
         "//external:gflags",
         "//modules/control/common",
     ],
+    linkopts = [ "-lconsole_bridge" ]
 )
 
 cc_test(

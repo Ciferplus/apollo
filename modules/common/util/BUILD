@@ -150,6 +150,7 @@ cc_test(
         "//modules/common:log",
         "@gtest//:main",
     ],
+    linkopts = [ "-lconsole_bridge" ]
 )
 
 cc_test(

@@ -11,6 +11,7 @@ cc_binary(
         "//modules/common",
         "@ros//:ros_common",
     ],
+    linkopts = [ "-lconsole_bridge" ]
 )
 
 cc_binary(
@@ -24,6 +25,7 @@ cc_binary(
         "//modules/control/proto:control_proto",
         "@ros//:ros_common",
     ],
+    linkopts = [ "-lconsole_bridge" ]
 )
 
 cpplint()

@@ -65,6 +65,7 @@ cc_test(
         "//modules/canbus/vehicle/lincoln:lincoln_controller",
         "@gtest//:main",
     ],
+    linkopts = [ "-lconsole_bridge" ]
 )
 
 cc_test(
@@ -77,6 +78,7 @@ cc_test(
         "//modules/canbus/vehicle/lincoln:lincoln_message_manager",
         "@gtest//:main",
     ],
+    linkopts = [ "-lconsole_bridge" ]
 )
 
 cc_test(
@@ -87,6 +89,7 @@ cc_test(
         ":lincoln_vehicle_factory",
         "@gtest//:main",
     ],
+    linkopts = [ "-lconsole_bridge" ]
 )
 
 cpplint()

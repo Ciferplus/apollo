@@ -109,6 +109,7 @@ cc_test(
         "//modules/common/util",
         "@gtest//:main",
     ],
+    linkopts = [ "-lconsole_bridge" ]
 )
 
 cpplint()

@@ -30,6 +30,7 @@ cc_binary(
         "//modules/common:log",
         "@ros//:ros_common",
     ],
+    linkopts = [ "-lconsole_bridge" ]
 )
 
 cpplint()

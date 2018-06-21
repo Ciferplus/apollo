@@ -71,6 +71,7 @@ cc_test(
         "//modules/canbus/vehicle/lincoln/protocol:canbus_lincoln_protocol",
         "@gtest//:main",
     ],
+    linkopts = [ "-lconsole_bridge" ]
 )
 
 cc_test(
@@ -311,6 +312,7 @@ cc_test(
         "//modules/canbus/vehicle/lincoln/protocol:canbus_lincoln_protocol",
         "@gtest//:main",
     ],
+    linkopts = [ "-lconsole_bridge" ]
 )
 
 cc_test(

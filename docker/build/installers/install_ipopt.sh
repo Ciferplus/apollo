@@ -21,9 +21,9 @@ set -e
 
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
-apt-get install -y libblas-dev liblapack-dev gfortran
+#apt-get install -y libblas-dev liblapack-dev gfortran
 
-wget https://www.coin-or.org/download/source/Ipopt/Ipopt-3.12.8.zip -O Ipopt-3.12.8.zip
+#wget https://www.coin-or.org/download/source/Ipopt/Ipopt-3.12.8.zip -O Ipopt-3.12.8.zip
 unzip Ipopt-3.12.8.zip
 
 pushd Ipopt-3.12.8/ThirdParty/Mumps
@@ -31,7 +31,7 @@ bash get.Mumps
 popd
 
 pushd Ipopt-3.12.8
-./configure --build=x86_64
+./configure  --build=arm
 make -j8 all
 make install
 mkdir -p /usr/local/ipopt

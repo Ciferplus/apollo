@@ -35,5 +35,6 @@ cc_library(
     linkopts = [
         "-lrt",
         "-lboost_system",
+        "-lconsole_bridge",
     ],
 )

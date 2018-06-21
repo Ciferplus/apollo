@@ -35,10 +35,10 @@ function start() {
     # Start roscore.
     bash scripts/roscore.sh start
     # Start monitor.
-    supervisorctl start monitor > /dev/null
+    supervisorctl -c /apollo/modules/tools/supervisord/dev.conf start monitor > /dev/null
     # Start dreamview.
     bash scripts/voice_detector.sh start
-    supervisorctl start dreamview > /dev/null
+    supervisorctl -c /apollo/modules/tools/supervisord/dev.conf start dreamview > /dev/null
     echo "Dreamview is running at http://localhost:8888"
 }
 

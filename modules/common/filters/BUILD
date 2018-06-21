@@ -61,6 +61,7 @@ cc_test(
         "@gtest//:main",
         "@ros//:ros_common",
     ],
+    linkopts = [ "-lconsole_bridge" ]
 )
 
 cc_test(
