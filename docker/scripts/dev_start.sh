@@ -16,6 +16,9 @@
 # limitations under the License.
 ###############################################################################
 
+APOLLO_ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../.." && pwd )"
+source ${APOLLO_ROOT_DIR}/scripts/apollo_base.sh
+
 INCHINA="no"
 LOCAL_IMAGE="no"
 VERSION=""
@@ -23,6 +26,28 @@ ARCH=$(uname -m)
 VERSION_X86_64="dev-x86_64-20180830_2013"
 VERSION_AARCH64="dev-aarch64-20170927_1111"
 VERSION_OPT=""
+DOCKER_REPO=${DOCKER_REPO:-apolloauto/apollo}
+
+VOLUME_VERSION="latest"
+DEFAULT_MAPS=(
+  sunnyvale_big_loop
+  sunnyvale_loop
+)
+MAP_VOLUME_CONF=""
+
+function show_usage()
+{
+cat <<EOF
+Usage: $(basename $0) [options] ...
+OPTIONS:
+    -C                     Pull docker image from China mirror.
+    -h, --help             Display this help and exit.
+    -t, --tag <version>    Specify which version of a docker image to pull.
+    -l, --local            Use local docker image.
+    stop                   Stop all running Apollo containers.
+EOF
+exit 0
+}
 
 # Check whether user has agreed license agreement
 function check_agreement() {
@@ -50,57 +75,36 @@ function check_agreement() {
   fi
 }
 
-function show_usage()
-{
-cat <<EOF
-Usage: $(basename $0) [options] ...
-OPTIONS:
-    -C                     Pull docker image from China mirror.
-    -h, --help             Display this help and exit.
-    -t, --tag <version>    Specify which version of a docker image to pull.
-    -l, --local            Use local docker image.
-    stop                   Stop all running Apollo containers.
-EOF
-exit 0
-}
-
 function stop_containers()
 {
-running_containers=$(docker ps --format "{{.Names}}")
+    running_containers=$(docker ps --format "{{.Names}}")
 
-for i in ${running_containers[*]}
-do
-  if [[ "$i" =~ apollo_* ]];then
-    printf %-*s 70 "stopping container: $i ..."
-    docker stop $i > /dev/null
-    if [ $? -eq 0 ];then
-      printf "\033[32m[DONE]\033[0m\n"
-    else
-      printf "\033[31m[FAILED]\033[0m\n"
-    fi
-  fi
-done
+    for i in ${running_containers[*]}
+    do
+        if [[ "$i" =~ apollo_* ]];then
+            printf %-*s 70 "stopping container: $i ..."
+            docker stop $i > /dev/null
+            if [ $? -eq 0 ];then
+                printf "\033[32m[DONE]\033[0m\n"
+            else
+                printf "\033[31m[FAILED]\033[0m\n"
+            fi
+        fi
+    done
 }
 
-APOLLO_ROOT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../.." && pwd )"
+function prepare_host_env()
+{
+     if [ ! -e /apollo ]; then
+         sudo ln -sf ${APOLLO_ROOT_DIR} /apollo
+     fi
 
-if [ ! -e /apollo ]; then
-    sudo ln -sf ${APOLLO_ROOT_DIR} /apollo
-fi
+     if [ -e /proc/sys/kernel ]; then
+         echo "/apollo/data/core/core_%e.%p" | sudo tee /proc/sys/kernel/core_pattern > /dev/null
+     fi
+}
 
-if [ -e /proc/sys/kernel ]; then
-    echo "/apollo/data/core/core_%e.%p" | sudo tee /proc/sys/kernel/core_pattern > /dev/null
-fi
-
-source ${APOLLO_ROOT_DIR}/scripts/apollo_base.sh
 check_agreement
-
-VOLUME_VERSION="latest"
-DEFAULT_MAPS=(
-  sunnyvale_big_loop
-  sunnyvale_loop
-)
-MAP_VOLUME_CONF=""
 
 while [ $# -gt 0 ]
 do
@@ -109,22 +113,22 @@ do
         INCHINA="yes"
         ;;
     -image)
-        echo -e "\033[093mWarning\033[0m: This option has been replaced by \"-t\" and \"--tag\", please use the new one.\n"
+        warning "This option has been replaced by \"-t\" and \"--tag\", please use the new one.\n"
         show_usage
         ;;
     -t|--tag)
         VAR=$1
-        [ -z $VERSION_OPT ] || echo -e "\033[093mWarning\033[0m: mixed option $VAR with $VERSION_OPT, only the last one will take effect.\n"
+        [ -z $VERSION_OPT ] || warning "Mixed option $VAR with $VERSION_OPT, only the last one will take effect.\n"
         shift
         VERSION_OPT=$1
-        [ -z ${VERSION_OPT// /} ] && echo -e "Missing parameter for $VAR" && exit 2
-        [[ $VERSION_OPT =~ ^-.* ]] && echo -e "Missing parameter for $VAR" && exit 2
+        [ -z ${VERSION_OPT// /} ] && warning "Missing parameter for $VAR" && show_usage
+        [[ $VERSION_OPT =~ ^-.* ]] && warning "Missing parameter for $VAR" && show_usage
         ;;
     dev-*) # keep backward compatibility, should be removed from further version.
-        [ -z $VERSION_OPT ] || echo -e "\033[093mWarning\033[0m: mixed option $1 with -t/--tag, only the last one will take effect.\n"
+        [ -z $VERSION_OPT ] || warning "Mixed option $1 with -t/--tag, only the last one will take effect.\n"
         VERSION_OPT=$1
-        echo -e "\033[93mWarning\033[0m: You are using an old style command line option which may be removed from"
-        echo -e "further versoin, please use -t <version> instead.\n"
+        warning "You are using an old style command line option which may be removed from" \
+                "further versoin, please use -t or --tag instead.\n"
         ;;
     -h|--help)
         show_usage
@@ -139,42 +143,30 @@ do
             "${map_name}" "${VOLUME_VERSION}"
         ;;
     stop)
-	stop_containers
-	exit 0
-	;;
+        stop_containers
+        exit 0
+	    ;;
     *)
-        echo -e "\033[93mWarning\033[0m: Unknown option: $1"
+        warning "Unknown option: $1"
         exit 2
         ;;
     esac
     shift
 done
 
-if [ ! -z "$VERSION_OPT" ]; then
+function get_docker_version()
+{
+  if [ ! -z "$VERSION_OPT" ]; then
     VERSION=$VERSION_OPT
-elif [ ${ARCH} == "x86_64" ]; then
+  elif [ ${ARCH} == "x86_64" ]; then
     VERSION=${VERSION_X86_64}
-elif [ ${ARCH} == "aarch64" ]; then
+  elif [ ${ARCH} == "aarch64" ]; then
     VERSION=${VERSION_AARCH64}
-else
+  else
     echo "Unknown architecture: ${ARCH}"
     exit 0
-fi
-
-if [ -z "${DOCKER_REPO}" ]; then
-    DOCKER_REPO=apolloauto/apollo
-fi
-
-if [ "$INCHINA" == "yes" ]; then
-    DOCKER_REPO=registry.docker-cn.com/apolloauto/apollo
-fi
-
-if [ "$LOCAL_IMAGE" == "yes" ] && [ -z "$VERSION_OPT" ]; then
-    VERSION="local_dev"
-fi
-
-
-IMG=${DOCKER_REPO}:$VERSION
+  fi
+}
 
 function local_volumes() {
     # Apollo root and bazel cache dirs are required.
@@ -197,17 +189,44 @@ function local_volumes() {
     echo "${volumes}"
 }
 
+function run_docker()
+{
+    case $1 in
+      pull)
+        IMAGE=$2
+        info "start pulling docker image: $IMAGE"
+        docker pull "$IMAGE"
+        if [ $? -ne 0 ];then
+            error "Failed to pull docker image: $IMAGE"
+            exit 1
+        fi
+        ;;
+      run)
+        shift
+        docker run $*
+        ;;
+      *)
+        ;;
+    esac
+}
+
 function main(){
+    prepare_host_env
+
+    if [ "$INCHINA" == "yes" ]; then
+        DOCKER_REPO=registry.docker-cn.com/apolloauto/apollo
+    fi
+
+    if [ "$LOCAL_IMAGE" == "yes" ] && [ -z "$VERSION_OPT" ]; then
+       VERSION="local_dev"
+    fi
+
+    IMG=${DOCKER_REPO}:$VERSION
 
     if [ "$LOCAL_IMAGE" = "yes" ];then
         info "Start docker container based on local image : $IMG"
     else
-        info "Start pulling docker image $IMG ..."
-        docker pull $IMG
-        if [ $? -ne 0 ];then
-            error "Failed to pull docker image."
-            exit 1
-        fi
+        run_docker pull  $IMG
     fi
 
     docker ps -a --format "{{.Names}}" | grep 'apollo_dev' 1>/dev/null
