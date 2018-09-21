@@ -35,7 +35,7 @@ For business and partnership, please visit [our website](http://apollo.auto).
 **The Apollo Team now proudly presents to you the latest [version 3.0](https://github.com/ApolloAuto/apollo/blob/master/docs/quickstart/apollo_3_0_quick_start.md).**
 
 
- Apollo 3.0 is loaded with new modules and features, but needs to be calibrated and configured perfectly before you take it for a spin. Please review the prerequisites and installation steps in detail to ensure that you are well equipped to build and launch Apollo. You could also check out Apollo's architecture overview for a greater understanding on Apollo's core technology and platform. 
+ Apollo 3.0 is loaded with new modules and features, but needs to be calibrated and configured perfectly before you take it for a spin. Please review the prerequisites and installation steps in detail to ensure that you are well equipped to build and launch Apollo. You could also check out Apollo's architecture overview for a greater understanding on Apollo's core technology and platform.
 
 [Want to contribute to our code?](https://github.com/ApolloAuto/apollo/blob/master/CONTRIBUTING.md) follow this guide.
 
@@ -52,13 +52,13 @@ For business and partnership, please visit [our website](http://apollo.auto).
 * Working knowledge of Docker
 
 
- - Please note, it is recommended that you install the versions of Apollo in the following order: 
+ - Please note, it is recommended that you install the versions of Apollo in the following order:
  **1.0 > 1.5 > 2.0 > 2.5 > 3.0**.
- The reason behind this recommendation is that you need to confirm whether individual hardware components 
+ The reason behind this recommendation is that you need to confirm whether individual hardware components
  and modules are functioning correctly and clear various version test cases,
  before progressing to a higher more capable version for your safety and the safety of those around you.
 
- - Please note, if you do not have a vehicle, proceed to the [Installation - Without Hardware](#without-hardware) 
+ - Please note, if you do not have a vehicle, proceed to the [Installation - Without Hardware](#without-hardware)
 
 
 #### Individual Version Requirements:
@@ -67,7 +67,7 @@ The following diagram highlights the scope and features of each Apollo release:
 
 ![](https://github.com/ApolloAuto/apollo/blob/master/docs/demo_guide/images/apollo_versions_3.png)
 
-[**Apollo 1.0:**](https://github.com/ApolloAuto/apollo/blob/master/docs/quickstart/apollo_1_0_hardware_system_installation_guide.md) 
+[**Apollo 1.0:**](https://github.com/ApolloAuto/apollo/blob/master/docs/quickstart/apollo_1_0_hardware_system_installation_guide.md)
 
 Apollo 1.0 also referred to as the Automatic GPS Waypoint Following, works in an enclosed venue such as a test track or parking lot. This installation is necessary to ensure that Apollo works perfectly with your vehicle. The diagram below lists the various modules in Apollo 1.0.
 
@@ -95,11 +95,11 @@ Apollo 1.0 also referred to as the Automatic GPS Waypoint Following, works in an
 
     * Apollo Linux Kernel (based on Linux Kernel 4.4.32)
 
-[**Apollo 1.5:**](https://github.com/ApolloAuto/apollo/blob/master/docs/quickstart/apollo_1_5_hardware_system_installation_guide.md) 
+[**Apollo 1.5:**](https://github.com/ApolloAuto/apollo/blob/master/docs/quickstart/apollo_1_5_hardware_system_installation_guide.md)
 
 Apollo 1.5 is meant for fixed lane cruising. With the addition of LiDAR, vehicles with this version now have better perception of its surroundings and can better map its current position and plan its trajectory for safer maneuvering on its lane. Please note, the modules highlighted in Yellow are additions or upgrades for version 1.5.
 
-![image alt text](docs/demo_guide/images/Apollo_1_5.png)	
+![image alt text](docs/demo_guide/images/Apollo_1_5.png)
 
 **For Setup:**
 
@@ -139,12 +139,12 @@ Apollo 2.0 supports vehicles autonomously driving on simple urban roads. Vehicle
 
 [**Apollo 2.5:**](https://github.com/ApolloAuto/apollo/blob/master/docs/quickstart/apollo_2_5_hardware_system_installation_guide_v1.md)
 
-Apollo 2.5 allows the vehicle to autonomously run on geo-fenced highways with a camera for obstacle detection. Vehicles are able to maintain lane control, cruise and avoid collisions with vehicles ahead of them. 
+Apollo 2.5 allows the vehicle to autonomously run on geo-fenced highways with a camera for obstacle detection. Vehicles are able to maintain lane control, cruise and avoid collisions with vehicles ahead of them.
 
 ```
 Please note, if you need to test Apollo 2.5; for safety purposes, please seek the help of the
 Apollo Engineering team. Your safety is our #1 priority,
-and we want to ensure Apollo 2.5 was integrated correctly with your vehicle before you hit the road. 
+and we want to ensure Apollo 2.5 was integrated correctly with your vehicle before you hit the road.
 ```
 
 ![image alt text](docs/demo_guide/images/Apollo_2_5.png)
@@ -157,13 +157,13 @@ and we want to ensure Apollo 2.5 was integrated correctly with your vehicle befo
 
     * Additional Camera
 
-* Software: 
+* Software:
 
     * Same as 2.0
 
 [**Apollo 3.0:**](https://github.com/ApolloAuto/apollo/blob/master/docs/quickstart/apollo_3_0_quick_start.md)
 
-Apollo 3.0's main focus is to provide a platform for developers to build upon in a closed venue low-speed environment. Vehicles are able to maintain lane control, cruise and avoid collisions with vehicles ahead of them. 
+Apollo 3.0's main focus is to provide a platform for developers to build upon in a closed venue low-speed environment. Vehicles are able to maintain lane control, cruise and avoid collisions with vehicles ahead of them.
 
 ![image alt text](docs/demo_guide/images/Apollo_3.0_diagram.png)
 
@@ -175,7 +175,7 @@ Apollo 3.0's main focus is to provide a platform for developers to build upon in
     * Apollo Sensor Unit
     * Apollo Hardware Development Platform with additional sensor support and flexibility
 
-* Software: 
+* Software:
 
     * Guardian
     * Monitor
@@ -197,13 +197,13 @@ Apollo 3.0's main focus is to provide a platform for developers to build upon in
 
 ## Installation
 
-* [Fork and then Clone Apollo's GitHub code](https://github.com/ApolloAuto/apollo) 
+* [Fork and then Clone Apollo's GitHub code](https://github.com/ApolloAuto/apollo)
 
 * [Build and Release using Docker](https://github.com/ApolloAuto/apollo/blob/master/docs/howto/how_to_build_and_release.md) - This step is required
 
 * [Launch and Run Apollo](https://github.com/ApolloAuto/apollo/blob/master/docs/howto/how_to_launch_Apollo.md)
 
-If at this point, you do not have a Hardware setup, please go to [Without Hardware](#without-hardware). 
+If at this point, you do not have a Hardware setup, please go to [Without Hardware](#without-hardware).
 
 ### With Hardware:
 
@@ -225,11 +225,11 @@ If at this point, you do not have a Hardware setup, please go to [Without Hardwa
 
 * [Technical Tutorial](https://github.com/ApolloAuto/apollo/tree/master/docs/technical_tutorial): Everything you need to know about Apollo. Written as individual versions with links to every document related to that version.
 
-* [HowTo](https://github.com/ApolloAuto/apollo/tree/master/docs/howto): Brief technical solutions to common problems that developers face during the installation and use of the Apollo platform 
+* [HowTo](https://github.com/ApolloAuto/apollo/tree/master/docs/howto): Brief technical solutions to common problems that developers face during the installation and use of the Apollo platform
 
-* [Specs](https://github.com/ApolloAuto/apollo/tree/master/docs/specs): A Deep dive into Apollo's Hardware and Software specifications (only recommended for expert level developers that have successfully installed and launched Apollo) 
+* [Specs](https://github.com/ApolloAuto/apollo/tree/master/docs/specs): A Deep dive into Apollo's Hardware and Software specifications (only recommended for expert level developers that have successfully installed and launched Apollo)
 
-* [FAQs](https://github.com/ApolloAuto/apollo/tree/master/docs/FAQs) 
+* [FAQs](https://github.com/ApolloAuto/apollo/tree/master/docs/FAQs)
 
 ## Questions
 
@@ -237,13 +237,13 @@ You are welcome to submit questions and bug reports as [GitHub Issues](https://g
 
 ## Copyright and License
 
-Apollo is provided under the [Apache-2.0 license](https://github.com/natashadsouza/apollo/blob/master/LICENSE).
+Apollo is provided under the [Apache-2.0 license](https://github.com/ApolloAuto/apollo/blob/master/LICENSE).
 
 ## Disclaimer
 
 Please refer the Disclaimer of Apollo in [Apollo's official website](http://apollo.auto/docs/disclaimer.html).
 
-## Connect with us 
+## Connect with us
 * [Have suggestions for our GitHub page?](https://github.com/ApolloAuto/apollo/issues)
 * [Twitter](https://twitter.com/apolloplatform)
 * [YouTube](https://www.youtube.com/channel/UC8wR_NX_NShUTSSqIaEUY9Q)
